@@ -20,9 +20,6 @@ def binary_search(arr, key):
             left = mid + 1
         else:
             right = mid
-
-    mid = int((left + right) / 2)
-
     return left
 
 
