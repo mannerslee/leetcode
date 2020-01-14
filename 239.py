@@ -1,10 +1,11 @@
-import collections as c
-
-
 class Solution:
-    def maxSlidingWindow(self, nums, k):
-        deq = c.deque(sorted(nums[:k]))
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if len(nums) == 0:
+            return []
 
-
-if __name__ == '__main__':
-    k = 3
+        if len(nums) < k:
+            return max(nums)
+        result = []
+        for i in range(len(nums) - k + 1):
+            result.append(max(nums[i:i + k]))
+        return result
