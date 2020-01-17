@@ -26,7 +26,7 @@ class Solution:
                 right = mid - 1
         return -1
 
-    def search(self, nums: List[int], target: int) -> int:
+    def search(self, nums, target: int) -> int:
         if len(nums) == 0:
             return -1
 
