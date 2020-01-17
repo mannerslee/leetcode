@@ -20,6 +20,8 @@ def binary_search(arr, key):
             left = mid + 1
         else:
             right = mid
+    if arr[left] != key:
+        return -1
     return left
 
 

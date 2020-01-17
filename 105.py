@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+    def buildTree(self, preorder, inorder):
         inorder_map = {}
         for index, item in enumerate(inorder):
             inorder_map[item] = index

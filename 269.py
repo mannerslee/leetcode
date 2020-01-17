@@ -1,4 +1,10 @@
 class Solution:
+    def list2str(self, s):
+        result = ''
+        for w in s:
+            result += w
+        return result
+
     def compareWord(self, s1, s2):
         for i in range(min(len(s1), len(s2))):
             if s1[i] != s2[i]:
@@ -13,35 +19,55 @@ class Solution:
         return list(letter_set)
 
     def initLetterOrderList(self, letter_set):
-        beforeOrderMap = {}
-        afterOrderMap = {}
+        in_map = {}
+        out_map = {}
         for letter in letter_set:
-            beforeOrderMap[letter] = set()
-            afterOrderMap[letter] = set()
-        return beforeOrderMap, afterOrderMap
+            in_map[letter] = ""
+            out_map[letter] = ""
+        return in_map, out_map
 
     def alien_order(self, words):
         letter_list = self.getLetterList(words)
-        beforeOrderMap, afterOrderMap = self.initLetterOrderList(letter_list)
+        in_map, out_map = self.initLetterOrderList(letter_list)
+
         for i in range(len(words) - 1):
             compare = self.compareWord(words[i], words[i + 1])
             if compare is not None:
-                beforeOrderMap[compare[1]] = compare[0]
-                afterOrderMap[compare[0]] = compare[1]
-        print("beforeOrderMap: ", beforeOrderMap)
+                in_map[compare[1]] = compare[0]
+                out_map[compare[0]] = compare[1]
+
+        print('letter_list = ', letter_list)
+        print("in_map: ", in_map)
         print("=======================================")
-        print("afterOrderMap: ", afterOrderMap)
+        print("out_map: ", out_map)
+        # ---------------------Topological sort----------------------------------
+        result = []
+        flag = True
+        while flag:
+            print('                 **letter_list', letter_list)
+            for i in letter_list:
+                if in_map[i] == "":
+                    print('                         @i  = ', i)
+                    del in_map[i]
+                    result.append(i)
+                    if out_map[i] == "":
+                        return self.list2str(result)
+                    else:
+                        print('                         @ set out_map[', i, ']  = "" ')
+                        in_map[out_map[i]] = ""
+                        letter_list.remove(i)
+                        break
+                else:
+                    print('---->>>>>')
+                    flag = False
+            print('remove :', i)
+
+        return []
 
 
 if __name__ == '__main__':
-    ls = [
-        "wrt",
-        "wrf",
-        "er",
-        "ett",
-        "rftt"
-    ]
-    solution = Solution()
+    ls = ["wrt", "wrf", "er", "ett", "rftt"]
+solution = Solution()
 
-    result = solution.alien_order(ls)
-    # print("result = ", result)
+result = solution.alien_order(ls)
+print("result = ", result)
